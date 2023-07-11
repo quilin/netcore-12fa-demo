@@ -1,13 +1,20 @@
 using Microsoft.EntityFrameworkCore;
+using TFA.Domain.UseCases.CreateTopic;
+using TFA.Domain.UseCases.GetForums;
 using TFA.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("Postgres");
+
+builder.Services.AddScoped<IGetForumsUseCase, GetForumsUseCase>();
+builder.Services.AddScoped<ICreateTopicUseCase, CreateTopicUseCase>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContextPool<ForumDbContext>(options => options
-    .UseNpgsql("User ID=postgres;Password=admin;Host=localhost;Port=5432;Database=tfa;Pooling=true;MinPoolSize=0;MaxPoolSize=100;Connection Idle Lifetime=60;"));
+    .UseNpgsql(connectionString));
 
 var app = builder.Build();
 
