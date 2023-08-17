@@ -12,4 +12,9 @@
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <ProjectReference Include="..\TFA.Domain\TFA.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
