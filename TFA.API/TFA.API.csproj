@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.19">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,5 +25,6 @@
       <ProjectReference Include="..\TFA.Domain\TFA.Domain.csproj" />
       <ProjectReference Include="..\TFA.Storage\TFA.Storage.csproj" />
     </ItemGroup>
+
 
 </Project>
