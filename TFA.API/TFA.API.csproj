@@ -18,12 +18,16 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
+        <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+        <PackageReference Include="Serilog.Sinks.OpenSearch" Version="1.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TFA.Domain.DependencyInjection\TFA.Domain.DependencyInjection.csproj" />
       <ProjectReference Include="..\TFA.Domain\TFA.Domain.csproj" />
-      <ProjectReference Include="..\TFA.Storage\TFA.Storage.csproj" />
+      <ProjectReference Include="..\TFA.Storage.DependencyInjection\TFA.Storage.DependencyInjection.csproj" />
     </ItemGroup>
 
 

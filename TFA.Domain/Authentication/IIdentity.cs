@@ -5,7 +5,7 @@ public interface IIdentity
     Guid UserId { get; }
 }
 
-public class User : IIdentity
+internal class User : IIdentity
 {
     public User(Guid userId)
     {
@@ -15,7 +15,7 @@ public class User : IIdentity
     public Guid UserId { get; }
 }
 
-public static class IdentityExtensions
+internal static class IdentityExtensions
 {
     public static bool IsAuthenticated(this IIdentity identity) => identity.UserId != Guid.Empty;
 }

@@ -2,7 +2,7 @@
 
 namespace TFA.Domain.UseCases.GetForums;
 
-public class GetForumsUseCase : IGetForumsUseCase
+internal class GetForumsUseCase : IGetForumsUseCase
 {
     private readonly IGetForumsStorage storage;
 
