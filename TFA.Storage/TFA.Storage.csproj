@@ -7,14 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.19" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.19" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.19"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.19"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="6.0.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8"/>
     </ItemGroup>
 
 
     <ItemGroup>
-      <ProjectReference Include="..\TFA.Domain\TFA.Domain.csproj" />
+        <ProjectReference Include="..\TFA.Domain\TFA.Domain.csproj"/>
     </ItemGroup>
+
 
 </Project>
