@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using TFA.Domain.UseCases.CreateTopic;
 
-namespace TFA.Domain.Tests;
+namespace TFA.Domain.Tests.CreateTopic;
 
 public class CreateTopicCommandValidatorShould
 {
