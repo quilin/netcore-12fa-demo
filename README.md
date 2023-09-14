@@ -19,7 +19,7 @@ dotnet tool install --global dotnet-ef
 В директории репозитория нужно выполнить команду
 
 ```shell
-dotnet ef database update --project TFA.API
+dotnet ef database update -p TFA.Storage -s TFA.API
 ```
 
 Можно запускать приложение и дергать ручку /forums! Правда, там будет пустота, пока вы руками не запишете в БД парочку форумов.
