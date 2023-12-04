@@ -70,8 +70,9 @@ public class CreateTopicUseCaseShould
         intentionIsAllowedSetup.Returns(true);
         getForumsSetup.ReturnsAsync(Array.Empty<Forum>());
 
-        await sut.Invoking(s => s.Execute(new CreateTopicCommand(forumId, "Some title"), CancellationToken.None))
-            .Should().ThrowAsync<ForumNotFoundException>();
+        (await sut.Invoking(s => s.Execute(new CreateTopicCommand(forumId, "Some title"), CancellationToken.None))
+            .Should().ThrowAsync<ForumNotFoundException>())
+            .Which.DomainErrorCode.Should().Be(DomainErrorCode.Gone);
     }
 
     [Fact]

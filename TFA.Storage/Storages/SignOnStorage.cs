@@ -1,4 +1,5 @@
 ﻿using TFA.Domain.UseCases.SignOn;
+using TFA.Storage.Entities;
 
 namespace TFA.Storage.Storages;
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TFA.Domain.UseCases.CreateTopic;
+using TFA.Storage.Entities;
 
 namespace TFA.Storage.Storages;
 

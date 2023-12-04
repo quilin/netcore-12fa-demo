@@ -1,0 +1,9 @@
+scrape_configs:
+  - job_name: tfa-scrape
+    scrape_interval: 10s
+    scrape_timeout: 3s
+    static_configs:
+      - targets:
+          - host.docker.internal:5032
+        labels:
+          app: tfa

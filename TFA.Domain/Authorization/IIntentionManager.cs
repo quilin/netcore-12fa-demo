@@ -5,8 +5,6 @@ namespace TFA.Domain.Authorization;
 public interface IIntentionManager
 {
     bool IsAllowed<TIntention>(TIntention intention) where TIntention : struct;
-
-    bool IsAllowed<TIntention, TObject>(TIntention intention, TObject target) where TIntention : struct;
 }
 
 internal class IntentionManager : IIntentionManager
@@ -26,11 +24,6 @@ internal class IntentionManager : IIntentionManager
     {
         var matchingResolver = resolvers.OfType<IIntentionResolver<TIntention>>().FirstOrDefault();
         return matchingResolver?.IsAllowed(identityProvider.Current, intention) ?? false;
-    }
-
-    public bool IsAllowed<TIntention, TObject>(TIntention intention, TObject target) where TIntention : struct
-    {
-        throw new NotImplementedException();
     }
 }
 

@@ -1,20 +1,12 @@
 ﻿using System.Security.Cryptography;
 using FluentAssertions;
 using TFA.Domain.Authentication;
-using Xunit.Abstractions;
 
 namespace TFA.Domain.Tests.Authentication;
 
 public class AesSymmetricEncryptorDecryptorShould
 {
-    private readonly ITestOutputHelper testOutputHelper;
     private readonly AesSymmetricEncryptorDecryptor sut = new();
-
-    public AesSymmetricEncryptorDecryptorShould(
-        ITestOutputHelper testOutputHelper)
-    {
-        this.testOutputHelper = testOutputHelper;
-    }
 
     [Fact]
     public async Task ReturnMeaningfulEncryptedString()

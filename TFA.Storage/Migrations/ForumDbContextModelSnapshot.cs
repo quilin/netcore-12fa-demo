@@ -22,7 +22,7 @@ namespace TFA.Storage.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TFA.Storage.Comment", b =>
+            modelBuilder.Entity("TFA.Storage.Entities.Comment", b =>
                 {
                     b.Property<Guid>("CommentId")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace TFA.Storage.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("TFA.Storage.Forum", b =>
+            modelBuilder.Entity("TFA.Storage.Entities.Forum", b =>
                 {
                     b.Property<Guid>("ForumId")
                         .ValueGeneratedOnAdd()
@@ -69,7 +69,26 @@ namespace TFA.Storage.Migrations
                     b.ToTable("Forums");
                 });
 
-            modelBuilder.Entity("TFA.Storage.Topic", b =>
+            modelBuilder.Entity("TFA.Storage.Entities.Session", b =>
+                {
+                    b.Property<Guid>("SessionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("SessionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Sessions");
+                });
+
+            modelBuilder.Entity("TFA.Storage.Entities.Topic", b =>
                 {
                     b.Property<Guid>("TopicId")
                         .ValueGeneratedOnAdd()
@@ -101,7 +120,7 @@ namespace TFA.Storage.Migrations
                     b.ToTable("Topics");
                 });
 
-            modelBuilder.Entity("TFA.Storage.User", b =>
+            modelBuilder.Entity("TFA.Storage.Entities.User", b =>
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
@@ -127,15 +146,15 @@ namespace TFA.Storage.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TFA.Storage.Comment", b =>
+            modelBuilder.Entity("TFA.Storage.Entities.Comment", b =>
                 {
-                    b.HasOne("TFA.Storage.Topic", "Topic")
+                    b.HasOne("TFA.Storage.Entities.Topic", "Topic")
                         .WithMany("Comments")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TFA.Storage.User", "Author")
+                    b.HasOne("TFA.Storage.Entities.User", "Author")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -146,15 +165,26 @@ namespace TFA.Storage.Migrations
                     b.Navigation("Topic");
                 });
 
-            modelBuilder.Entity("TFA.Storage.Topic", b =>
+            modelBuilder.Entity("TFA.Storage.Entities.Session", b =>
                 {
-                    b.HasOne("TFA.Storage.Forum", "Forum")
+                    b.HasOne("TFA.Storage.Entities.User", "User")
+                        .WithMany("Sessions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TFA.Storage.Entities.Topic", b =>
+                {
+                    b.HasOne("TFA.Storage.Entities.Forum", "Forum")
                         .WithMany("Topics")
                         .HasForeignKey("ForumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TFA.Storage.User", "Author")
+                    b.HasOne("TFA.Storage.Entities.User", "Author")
                         .WithMany("Topics")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -165,19 +195,21 @@ namespace TFA.Storage.Migrations
                     b.Navigation("Forum");
                 });
 
-            modelBuilder.Entity("TFA.Storage.Forum", b =>
+            modelBuilder.Entity("TFA.Storage.Entities.Forum", b =>
                 {
                     b.Navigation("Topics");
                 });
 
-            modelBuilder.Entity("TFA.Storage.Topic", b =>
+            modelBuilder.Entity("TFA.Storage.Entities.Topic", b =>
                 {
                     b.Navigation("Comments");
                 });
 
-            modelBuilder.Entity("TFA.Storage.User", b =>
+            modelBuilder.Entity("TFA.Storage.Entities.User", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Sessions");
 
                     b.Navigation("Topics");
                 });

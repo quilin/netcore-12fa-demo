@@ -26,6 +26,6 @@ internal class SignOnUseCase : ISignOnUseCase
         var (salt, hash) = passwordManager.GeneratePasswordParts(command.Password);
         var userId = await storage.CreateUser(command.Login, salt, hash, cancellationToken);
 
-        return new User(userId);
+        return new User(userId, Guid.Empty);
     }
 }

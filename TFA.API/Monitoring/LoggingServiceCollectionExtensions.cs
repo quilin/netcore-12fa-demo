@@ -1,7 +1,7 @@
 ﻿using Serilog;
 using Serilog.Filters;
 
-namespace TFA.API.DependencyInjection;
+namespace TFA.API.Monitoring;
 
 internal static class LoggingServiceCollectionExtensions
 {
@@ -16,6 +16,5 @@ internal static class LoggingServiceCollectionExtensions
                 .WriteTo.OpenSearch(
                     configuration.GetConnectionString("Logs"),
                     "forum-logs-{0:yyyy.MM.dd}"))
-            .WriteTo.Logger(lc => lc.WriteTo.Console())
             .CreateLogger()));
 }

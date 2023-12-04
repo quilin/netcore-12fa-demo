@@ -22,7 +22,6 @@ public class ErrorHandlingMiddleware
     {
         try
         {
-            logger.LogError("Error handling started for request in path {RequestPath}", httpContext.Request.Path.Value);
             await next.Invoke(httpContext);
         }
         catch (Exception exception)

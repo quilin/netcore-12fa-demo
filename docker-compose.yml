@@ -7,6 +7,8 @@ networks:
 volumes:
   tfa-pg:
   tfa-logs:
+  tfa-prom:
+  tfa-grafana:
 
 services: 
   postgres:
@@ -41,3 +43,25 @@ services:
       DISABLE_SECURITY_DASHBOARDS_PLUGIN: 'true'
     depends_on:
       - opensearch
+
+  prometheus:
+    container_name: 'tfa-prom'
+    image: 'prom/prometheus'
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - tfa-prom:/prometheus
+
+  grafana:
+    container_name: 'tfa-grafana'
+    image: 'grafana/grafana'
+    restart: unless-stopped
+    environment:
+      GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource'
+    volumes:
+      - tfa-grafana:/var/lib/grafana
+    ports:
+      - '3000:3000'
+    depends_on:
+      - prometheus

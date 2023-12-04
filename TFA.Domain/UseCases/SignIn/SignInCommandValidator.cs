@@ -7,8 +7,9 @@ internal class SignInCommandValidator : AbstractValidator<SignInCommand>
 {
     public SignInCommandValidator()
     {
-        RuleFor(c => c.Login).Cascade(CascadeMode.Stop)
-            .NotEmpty().WithErrorCode(ValidationErrorCode.Empty);
+        RuleFor(c => c.Login)
+            .NotEmpty().WithErrorCode(ValidationErrorCode.Empty)
+            .MaximumLength(20).WithErrorCode(ValidationErrorCode.TooLong);
         RuleFor(c => c.Password)
             .NotEmpty().WithErrorCode(ValidationErrorCode.Empty);
     }

@@ -4,6 +4,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 		docker-compose.yml = docker-compose.yml
+		prometheus.yml = prometheus.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Domain", "TFA.Domain\TFA.Domain.csproj", "{7E2AA428-F3A6-4A45-BCB8-397BFA382B03}"
@@ -19,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Storage.DependencyInjection", "TFA.Storage.DependencyInjection\TFA.Storage.DependencyInjection.csproj", "{22B0E6F3-C5FE-45D1-B5AB-3703F869A771}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.E2E", "TFA.E2E\TFA.E2E.csproj", "{0745B0CA-116D-4E39-8DBD-462344FB3615}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Storage.Tests", "TFA.Storage.Tests\TFA.Storage.Tests.csproj", "{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,5 +57,9 @@ Global
 		{0745B0CA-116D-4E39-8DBD-462344FB3615}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0745B0CA-116D-4E39-8DBD-462344FB3615}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0745B0CA-116D-4E39-8DBD-462344FB3615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

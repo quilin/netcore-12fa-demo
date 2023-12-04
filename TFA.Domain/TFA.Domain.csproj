@@ -8,7 +8,9 @@
 
     <ItemGroup>
       <PackageReference Include="FluentValidation" Version="11.7.1" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.4" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+      <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="6.0.1" />
     </ItemGroup>
 
 
