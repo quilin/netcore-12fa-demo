@@ -1,9 +1,10 @@
-﻿using TFA.Domain.Authentication;
+﻿using MediatR;
+using TFA.Domain.Authentication;
 using TFA.Domain.Authorization;
 
 namespace TFA.Domain.UseCases.SignOut;
 
-internal class SignOutUseCase : ISignOutUseCase
+internal class SignOutUseCase : IRequestHandler<SignOutCommand>
 {
     private readonly IIntentionManager intentionManager;
     private readonly IIdentityProvider identityProvider;
@@ -19,11 +20,11 @@ internal class SignOutUseCase : ISignOutUseCase
         this.storage = storage;
     }
 
-    public async Task Execute(SignOutCommand command, CancellationToken cancellationToken)
+    public Task Handle(SignOutCommand command, CancellationToken cancellationToken)
     {
         intentionManager.ThrowIfForbidden(AccountIntention.SignOut);
 
         var sessionId = identityProvider.Current.SessionId;
-        await storage.RemoveSession(sessionId, cancellationToken);
+        return storage.RemoveSession(sessionId, cancellationToken);
     }
 }

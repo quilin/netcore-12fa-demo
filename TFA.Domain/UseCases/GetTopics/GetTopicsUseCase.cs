@@ -1,10 +1,12 @@
 ﻿using FluentValidation;
+using MediatR;
 using TFA.Domain.Models;
 using TFA.Domain.UseCases.GetForums;
 
 namespace TFA.Domain.UseCases.GetTopics;
 
-internal class GetTopicsUseCase : IGetTopicsUseCase
+internal class GetTopicsUseCase :
+    IRequestHandler<GetTopicsQuery, (IEnumerable<Topic> resources, int totalCount)>
 {
     private readonly IValidator<GetTopicsQuery> validator;
     private readonly IGetForumsStorage getForumsStorage;
@@ -20,7 +22,7 @@ internal class GetTopicsUseCase : IGetTopicsUseCase
         this.storage = storage;
     }
 
-    public async Task<(IEnumerable<Topic> resources, int totalCount)> Execute(
+    public async Task<(IEnumerable<Topic> resources, int totalCount)> Handle(
         GetTopicsQuery query, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(query, cancellationToken);

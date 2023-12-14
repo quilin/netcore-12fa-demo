@@ -36,7 +36,7 @@ public class SignOutUseCaseShould
     public async Task ThrowIntentionManagerException_WhenUserIsNotAuthenticated()
     {
         signOutIsAllowedSetup.Returns(false);
-        await sut.Invoking(s => s.Execute(new SignOutCommand(), CancellationToken.None))
+        await sut.Invoking(s => s.Handle(new SignOutCommand(), CancellationToken.None))
             .Should().ThrowAsync<IntentionManagerException>();
     }
 
@@ -48,7 +48,7 @@ public class SignOutUseCaseShould
         currentIdentitySetup.Returns(new User(Guid.Empty, sessionId));
         removeSessionSetup.Returns(Task.CompletedTask);
 
-        await sut.Execute(new SignOutCommand(), CancellationToken.None);
+        await sut.Handle(new SignOutCommand(), CancellationToken.None);
 
         storage.Verify(s => s.RemoveSession(sessionId, It.IsAny<CancellationToken>()), Times.Once);
         storage.VerifyNoOtherCalls();

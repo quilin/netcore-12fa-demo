@@ -19,9 +19,6 @@ public class AccountEndpointsShould : IClassFixture<ForumApiApplicationFactory>
     {
         using var httpClient = factory.CreateClient();
 
-        // Given I create a new account
-        // | Login | Password |
-        // | Test  | qwerty   |
         using var signOnResponse = await httpClient.PostAsync(
             "account", JsonContent.Create(new { login = "Test", password = "qwerty" }));
         signOnResponse.IsSuccessStatusCode.Should().BeTrue();

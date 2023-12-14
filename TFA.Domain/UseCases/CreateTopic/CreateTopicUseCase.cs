@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MediatR;
 using TFA.Domain.Authentication;
 using TFA.Domain.Authorization;
 using TFA.Domain.UseCases.GetForums;
@@ -6,7 +7,7 @@ using Topic = TFA.Domain.Models.Topic;
 
 namespace TFA.Domain.UseCases.CreateTopic;
 
-internal class CreateTopicUseCase : ICreateTopicUseCase
+internal class CreateTopicUseCase : IRequestHandler<CreateTopicCommand, Topic>
 {
     private readonly IValidator<CreateTopicCommand> validator;
     private readonly IIntentionManager intentionManager;
@@ -28,7 +29,7 @@ internal class CreateTopicUseCase : ICreateTopicUseCase
         this.storage = storage;
     }
 
-    public async Task<Topic> Execute(CreateTopicCommand command, CancellationToken cancellationToken)
+    public async Task<Topic> Handle(CreateTopicCommand command, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 

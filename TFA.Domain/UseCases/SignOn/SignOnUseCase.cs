@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
+using MediatR;
 using TFA.Domain.Authentication;
 
 namespace TFA.Domain.UseCases.SignOn;
 
-internal class SignOnUseCase : ISignOnUseCase
+internal class SignOnUseCase : IRequestHandler<SignOnCommand, IIdentity>
 {
     private readonly IValidator<SignOnCommand> validator;
     private readonly IPasswordManager passwordManager;
@@ -19,7 +20,7 @@ internal class SignOnUseCase : ISignOnUseCase
         this.storage = storage;
     }
 
-    public async Task<IIdentity> Execute(SignOnCommand command, CancellationToken cancellationToken)
+    public async Task<IIdentity> Handle(SignOnCommand command, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(command, cancellationToken);
 
