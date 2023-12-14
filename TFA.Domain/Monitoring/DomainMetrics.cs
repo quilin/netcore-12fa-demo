@@ -4,9 +4,9 @@ using System.Diagnostics.Metrics;
 
 namespace TFA.Domain.Monitoring;
 
-public class DomainMetrics(IMeterFactory meterFactory)
+public class DomainMetrics
 {
-    private readonly Meter meter = meterFactory.Create("TFA.Domain");
+    private readonly Meter meter = new("TFA.Domain");
     private readonly ConcurrentDictionary<string, Counter<int>> counters = new();
     internal static readonly ActivitySource ActivitySource = new("TFA.Domain");
 

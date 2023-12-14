@@ -11,6 +11,14 @@ namespace TFA.API.Controllers;
 [Route("account")]
 public class AccountController(IMediator mediator) : ControllerBase
 {
+    private readonly IMediator mediator;
+
+    public AccountController(
+        IMediator mediator)
+    {
+        this.mediator = mediator;
+    }
+
     [HttpPost]
     public async Task<IActionResult> SignOn(
         [FromBody] SignOn request,
