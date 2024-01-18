@@ -1,6 +1,4 @@
 ﻿using FluentAssertions;
-using FluentValidation;
-using FluentValidation.Results;
 using Moq;
 using Moq.Language.Flow;
 using TFA.Domain.Authorization;
@@ -17,11 +15,6 @@ public class CreateForumUseCaseShould
 
     public CreateForumUseCaseShould()
     {
-        var validator = new Mock<IValidator<CreateForumCommand>>();
-        validator
-            .Setup(v => v.ValidateAsync(It.IsAny<CreateForumCommand>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new ValidationResult());
-
         var intentionManager = new Mock<IIntentionManager>();
         intentionManager
             .Setup(m => m.IsAllowed(It.IsAny<ForumIntention>()))
@@ -30,8 +23,7 @@ public class CreateForumUseCaseShould
         storage = new Mock<ICreateForumStorage>();
         createForumSetup = storage.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<CancellationToken>()));
 
-        sut = new CreateForumUseCase(
-            validator.Object, intentionManager.Object, storage.Object);
+        sut = new CreateForumUseCase(intentionManager.Object, storage.Object);
     }
 
     [Fact]
@@ -44,7 +36,7 @@ public class CreateForumUseCaseShould
         };
         createForumSetup.ReturnsAsync(forum);
 
-        var actual = await sut.Execute(new CreateForumCommand("Hello"), CancellationToken.None);
+        var actual = await sut.Handle(new CreateForumCommand("Hello"), CancellationToken.None);
         actual.Should().Be(forum);
 
         storage.Verify(s => s.Create("Hello", It.IsAny<CancellationToken>()), Times.Once);

@@ -1,38 +1,24 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using MediatR;
 using Microsoft.Extensions.Options;
 using TFA.Domain.Authentication;
 using TFA.Domain.Exceptions;
 
 namespace TFA.Domain.UseCases.SignIn;
 
-internal class SignInUseCase : ISignInUseCase
+internal class SignInUseCase(
+    ISignInStorage storage,
+    IPasswordManager passwordManager,
+    ISymmetricEncryptor encryptor,
+    IOptions<AuthenticationConfiguration> options)
+    : IRequestHandler<SignInCommand, (IIdentity identity, string token)>
 {
-    private readonly IValidator<SignInCommand> validator;
-    private readonly ISignInStorage storage;
-    private readonly IPasswordManager passwordManager;
-    private readonly ISymmetricEncryptor encryptor;
-    private readonly AuthenticationConfiguration configuration;
+    private readonly AuthenticationConfiguration configuration = options.Value;
 
-    public SignInUseCase(
-        IValidator<SignInCommand> validator,
-        ISignInStorage storage,
-        IPasswordManager passwordManager,
-        ISymmetricEncryptor encryptor,
-        IOptions<AuthenticationConfiguration> options)
-    {
-        this.validator = validator;
-        this.storage = storage;
-        this.passwordManager = passwordManager;
-        this.encryptor = encryptor;
-        configuration = options.Value;
-    }
-
-    public async Task<(IIdentity identity, string token)> Execute(
+    public async Task<(IIdentity identity, string token)> Handle(
         SignInCommand command, CancellationToken cancellationToken)
     {
-        await validator.ValidateAndThrowAsync(command, cancellationToken);
-
         var recognisedUser = await storage.FindUser(command.Login, cancellationToken);
         if (recognisedUser is null)
         {

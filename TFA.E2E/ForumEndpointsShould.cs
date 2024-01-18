@@ -4,15 +4,8 @@ using TFA.API.Models;
 
 namespace TFA.E2E;
 
-public class ForumEndpointsShould : IClassFixture<ForumApiApplicationFactory>
+public class ForumEndpointsShould(ForumApiApplicationFactory factory) : IClassFixture<ForumApiApplicationFactory>
 {
-    private readonly ForumApiApplicationFactory factory;
-
-    public ForumEndpointsShould(ForumApiApplicationFactory factory)
-    {
-        this.factory = factory;
-    }
-
     // [Fact]
     public async Task CreateNewForum()
     {

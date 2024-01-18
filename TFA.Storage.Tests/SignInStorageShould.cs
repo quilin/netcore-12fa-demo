@@ -29,19 +29,12 @@ public class SignInStorageFixture : StorageTestFixture
     }
 }
 
-public class SignInStorageShould : IClassFixture<SignInStorageFixture>
+public class SignInStorageShould(SignInStorageFixture fixture) : IClassFixture<SignInStorageFixture>
 {
-    private readonly SignInStorageFixture fixture;
-    private readonly SignInStorage sut;
-
-    public SignInStorageShould(SignInStorageFixture fixture)
-    {
-        this.fixture = fixture;
-        sut = new SignInStorage(
-            new GuidFactory(),
-            fixture.GetDbContext(),
-            fixture.GetMapper());
-    }
+    private readonly SignInStorage sut = new(
+        new GuidFactory(),
+        fixture.GetDbContext(),
+        fixture.GetMapper());
 
     [Fact]
     public async Task ReturnUser_WhenDatabaseContainsUserWithSameLogin()

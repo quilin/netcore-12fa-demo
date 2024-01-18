@@ -4,17 +4,10 @@ using TFA.Storage.Storages;
 
 namespace TFA.Storage.Tests;
 
-public class CreateForumStorageShould : IClassFixture<StorageTestFixture>
+public class CreateForumStorageShould(StorageTestFixture fixture) : IClassFixture<StorageTestFixture>
 {
-    private readonly StorageTestFixture fixture;
-    private readonly CreateForumStorage sut;
-
-    public CreateForumStorageShould(StorageTestFixture fixture)
-    {
-        this.fixture = fixture;
-        sut = new CreateForumStorage(
-            fixture.GetMemoryCache(), new GuidFactory(), fixture.GetDbContext(), fixture.GetMapper());
-    }
+    private readonly CreateForumStorage sut = new(
+        fixture.GetMemoryCache(), new GuidFactory(), fixture.GetDbContext(), fixture.GetMapper());
 
     [Fact]
     public async Task InsertNewForumInDatabase()

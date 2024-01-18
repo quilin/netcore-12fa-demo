@@ -4,22 +4,12 @@ using TFA.Storage.Entities;
 
 namespace TFA.Storage.Storages;
 
-internal class CreateTopicStorage : ICreateTopicStorage
+internal class CreateTopicStorage(
+    IGuidFactory guidFactory,
+    IMomentProvider momentProvider,
+    ForumDbContext dbContext)
+    : ICreateTopicStorage
 {
-    private readonly IGuidFactory guidFactory;
-    private readonly IMomentProvider momentProvider;
-    private readonly ForumDbContext dbContext;
-
-    public CreateTopicStorage(
-        IGuidFactory guidFactory,
-        IMomentProvider momentProvider,
-        ForumDbContext dbContext)
-    {
-        this.guidFactory = guidFactory;
-        this.momentProvider = momentProvider;
-        this.dbContext = dbContext;
-    }
-
     public async Task<Domain.Models.Topic> CreateTopic(Guid forumId, Guid userId, string title,
         CancellationToken cancellationToken)
     {

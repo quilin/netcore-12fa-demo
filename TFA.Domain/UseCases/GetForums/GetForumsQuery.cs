@@ -1,12 +1,12 @@
 ﻿using MediatR;
-using TFA.Domain.Authentication;
+using TFA.Domain.Models;
 using TFA.Domain.Monitoring;
 
-namespace TFA.Domain.UseCases.SignOn;
+namespace TFA.Domain.UseCases.GetForums;
 
-public record SignOnCommand(string Login, string Password) : IRequest<IIdentity>, IMonitoredRequest
+public record GetForumsQuery : IRequest<IEnumerable<Forum>>, IMonitoredRequest
 {
-    private const string CounterName = "user.sign-on";
+    private const string CounterName = "forums.fetched";
 
     public void MonitorSuccess(DomainMetrics metrics) =>
         metrics.IncrementCount(CounterName, 1, DomainMetrics.ResultTags(true));

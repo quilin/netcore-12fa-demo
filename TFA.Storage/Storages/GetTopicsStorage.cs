@@ -3,16 +3,8 @@ using TFA.Domain.UseCases.GetTopics;
 
 namespace TFA.Storage.Storages;
 
-internal class GetTopicsStorage : IGetTopicsStorage
+internal class GetTopicsStorage(ForumDbContext dbContext) : IGetTopicsStorage
 {
-    private readonly ForumDbContext dbContext;
-
-    public GetTopicsStorage(
-        ForumDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
-
     public async Task<(IEnumerable<Domain.Models.Topic> resources, int totalCount)> GetTopics(
         Guid forumId, int skip, int take, CancellationToken cancellationToken)
     {

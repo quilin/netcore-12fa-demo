@@ -7,25 +7,13 @@ using TFA.Storage.Entities;
 
 namespace TFA.Storage.Storages;
 
-internal class CreateForumStorage : ICreateForumStorage
+internal class CreateForumStorage(
+    IMemoryCache memoryCache,
+    IGuidFactory guidFactory,
+    ForumDbContext dbContext,
+    IMapper mapper)
+    : ICreateForumStorage
 {
-    private readonly IMemoryCache memoryCache;
-    private readonly IGuidFactory guidFactory;
-    private readonly ForumDbContext dbContext;
-    private readonly IMapper mapper;
-
-    public CreateForumStorage(
-        IMemoryCache memoryCache,
-        IGuidFactory guidFactory,
-        ForumDbContext dbContext,
-        IMapper mapper)
-    {
-        this.memoryCache = memoryCache;
-        this.guidFactory = guidFactory;
-        this.dbContext = dbContext;
-        this.mapper = mapper;
-    }
-
     public async Task<Domain.Models.Forum> Create(string title, CancellationToken cancellationToken)
     {
         var forumId = guidFactory.Create();
