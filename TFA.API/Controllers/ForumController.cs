@@ -15,14 +15,6 @@ namespace TFA.API.Controllers;
 [Route("forums")]
 public class ForumController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator mediator;
-
-    public ForumController(
-        IMediator mediator)
-    {
-        this.mediator = mediator;
-    }
-
     [HttpPost]
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]

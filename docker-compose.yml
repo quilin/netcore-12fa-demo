@@ -21,29 +21,6 @@ services:
     volumes:
       - tfa-pg:/var/lib/postgresql/data
 
-  opensearch:
-    container_name: 'tfa-os'
-    image: 'opensearchproject/opensearch:2'
-    ports:
-      - '9200:9200'
-      - '9600:9600'
-    environment:
-      discovery.type: 'single-node'
-      plugins.security.disabled: 'true'
-    volumes:
-      - tfa-logs:/usr/share/opensearch/data
-  
-  opensearch-dashboards:
-    container_name: 'tfa-osd'
-    image: 'opensearchproject/opensearch-dashboards:latest'
-    ports:
-      - '5601:5601'
-    environment:
-      OPENSEARCH_HOSTS: '["http://tfa-os:9200"]'
-      DISABLE_SECURITY_DASHBOARDS_PLUGIN: 'true'
-    depends_on:
-      - opensearch
-
   prometheus:
     container_name: 'tfa-prom'
     image: 'prom/prometheus'
@@ -52,6 +29,15 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - tfa-prom:/prometheus
+
+  loki:
+    container_name: 'tfa-loki'
+    image: 'grafana/loki'
+    ports:
+      - '3100:3100'
+    volumes:
+      - ./loki-config.yml:/etc/loki/local-config.yaml
+    command: --config.file=/etc/loki/local-config.yaml
 
   grafana:
     container_name: 'tfa-grafana'
@@ -79,3 +65,14 @@ services:
       - '16686:16686'
       - '14268:14268'
       - '9411:9411'
+
+  api:
+    build:
+      context: .
+    container_name: 'tfa-api'
+    ports:
+      - '8080:8080'
+    environment:
+      ConnectionStrings__Postgres: 'User ID=postgres;Password=admin;Host=tfa-pg;Port=5432;Database=tfa;Pooling=true;MinPoolSize=0;MaxPoolSize=100;Connection Idle Lifetime=60;'
+      ConnectionStrings__Logs: 'http://tfa-loki:3100'
+      ConnectionStrings__Tracing: 'http://tfa-jaeger:14268/api/traces'

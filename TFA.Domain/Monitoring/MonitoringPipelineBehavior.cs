@@ -10,20 +10,12 @@ internal abstract class MonitoringPipelineBehavior
     protected static readonly TextMapPropagator Propagator = Propagators.DefaultTextMapPropagator;
 }
 
-internal class MonitoringPipelineBehavior<TRequest, TResponse> : MonitoringPipelineBehavior, IPipelineBehavior<TRequest, TResponse>
+internal class MonitoringPipelineBehavior<TRequest, TResponse>(
+    ILogger<MonitoringPipelineBehavior<TRequest, TResponse>> logger,
+    DomainMetrics metrics)
+    : MonitoringPipelineBehavior, IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
-    private readonly ILogger<MonitoringPipelineBehavior<TRequest, TResponse>> logger;
-    private readonly DomainMetrics metrics;
-
-    public MonitoringPipelineBehavior(
-        ILogger<MonitoringPipelineBehavior<TRequest, TResponse>> logger,
-        DomainMetrics metrics)
-    {
-        this.logger = logger;
-        this.metrics = metrics;
-    }
-
     public async Task<TResponse> Handle(
         TRequest request,
         RequestHandlerDelegate<TResponse> next,
@@ -40,11 +32,13 @@ internal class MonitoringPipelineBehavior<TRequest, TResponse> : MonitoringPipel
         {
             var result = await next.Invoke();
             monitoredRequest.MonitorSuccess(metrics);
+            activity?.AddTag("error", false);
             return result;
         }
         catch (Exception e)
         {
             monitoredRequest.MonitorFailure(metrics);
+            activity?.AddTag("error", true);
             logger.LogError(e, "Unhandled error caught while handling command {Command}", request);
             throw;
         }
