@@ -4,6 +4,10 @@ scrape_configs:
     scrape_timeout: 3s
     static_configs:
       - targets:
-          - host.docker.internal:5032
+          - host.docker.internal:5000
         labels:
-          app: tfa
+          app: tfa-local
+      - targets:
+          - tfa-api:8080
+        labels:
+          app: tfa-docker

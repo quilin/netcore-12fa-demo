@@ -1,6 +1,4 @@
 ﻿using FluentAssertions;
-using FluentValidation;
-using FluentValidation.Results;
 using Moq;
 using Moq.Language.Flow;
 using TFA.Domain.Exceptions;
@@ -19,11 +17,6 @@ public class GetTopicsUseCaseShould
 
     public GetTopicsUseCaseShould()
     {
-        var validator = new Mock<IValidator<GetTopicsQuery>>();
-        validator
-            .Setup(v => v.ValidateAsync(It.IsAny<GetTopicsQuery>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new ValidationResult());
-
         var getForumsStorage = new Mock<IGetForumsStorage>();
         getForumsSetup = getForumsStorage.Setup(s => s.GetForums(It.IsAny<CancellationToken>()));
 
@@ -31,7 +24,7 @@ public class GetTopicsUseCaseShould
         getTopicsSetup = storage.Setup(s =>
             s.GetTopics(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()));
 
-        sut = new GetTopicsUseCase(validator.Object, getForumsStorage.Object, storage.Object);
+        sut = new GetTopicsUseCase(getForumsStorage.Object, storage.Object);
     }
 
     [Fact]
@@ -42,7 +35,7 @@ public class GetTopicsUseCaseShould
         getForumsSetup.ReturnsAsync(new Forum[] { new() { Id = Guid.Parse("01B1C554-184B-4B32-913E-F7031AAD3BAC") } });
 
         var query = new GetTopicsQuery(forumId, 0, 1);
-        await sut.Invoking(s => s.Execute(query, CancellationToken.None))
+        await sut.Invoking(s => s.Handle(query, CancellationToken.None))
             .Should().ThrowAsync<ForumNotFoundException>();
     }
 
@@ -56,7 +49,7 @@ public class GetTopicsUseCaseShould
         var expectedTotalCount = 6;
         getTopicsSetup.ReturnsAsync((expectedResources, expectedTotalCount));
 
-        var (actualResources, actualTotalCount) = await sut.Execute(
+        var (actualResources, actualTotalCount) = await sut.Handle(
             new GetTopicsQuery(forumId, 5, 10), CancellationToken.None);
 
         actualResources.Should().BeEquivalentTo(expectedResources);

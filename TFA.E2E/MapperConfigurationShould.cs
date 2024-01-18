@@ -5,16 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace TFA.E2E;
 
-public class MapperConfigurationShould : IClassFixture<WebApplicationFactory<Program>>
+public class MapperConfigurationShould(WebApplicationFactory<Program> factory)
+    : IClassFixture<WebApplicationFactory<Program>>
 {
-    private readonly WebApplicationFactory<Program> factory;
-
-    public MapperConfigurationShould(
-        WebApplicationFactory<Program> factory)
-    {
-        this.factory = factory;
-    }
-
     [Fact]
     public void BeValid()
     {

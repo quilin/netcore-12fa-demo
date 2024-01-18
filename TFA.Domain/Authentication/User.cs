@@ -1,15 +1,9 @@
 ﻿namespace TFA.Domain.Authentication;
 
-public class User : IIdentity
+public class User(Guid userId, Guid sessionId) : IIdentity
 {
-    public User(Guid userId, Guid sessionId)
-    {
-        UserId = userId;
-        SessionId = sessionId;
-    }
-
-    public Guid UserId { get; }
-    public Guid SessionId { get; }
+    public Guid UserId { get; } = userId;
+    public Guid SessionId { get; } = sessionId;
 
     public static User Guest => new(Guid.Empty, Guid.Empty);
 }

@@ -21,28 +21,14 @@ services:
     volumes:
       - tfa-pg:/var/lib/postgresql/data
 
-  opensearch:
-    container_name: 'tfa-os'
-    image: 'opensearchproject/opensearch:2'
+  loki:
+    container_name: 'tfa-loki'
+    image: 'grafana/loki'
     ports:
-      - '9200:9200'
-      - '9600:9600'
-    environment:
-      discovery.type: 'single-node'
-      plugins.security.disabled: 'true'
+      - '3100:3100'
     volumes:
-      - tfa-logs:/usr/share/opensearch/data
-  
-  opensearch-dashboards:
-    container_name: 'tfa-osd'
-    image: 'opensearchproject/opensearch-dashboards:latest'
-    ports:
-      - '5601:5601'
-    environment:
-      OPENSEARCH_HOSTS: '["http://tfa-os:9200"]'
-      DISABLE_SECURITY_DASHBOARDS_PLUGIN: 'true'
-    depends_on:
-      - opensearch
+      - ./loki-config.yml:/etc/loki/local-config.yml
+    command: --config.file=/etc/loki/local-config.yml
 
   prometheus:
     container_name: 'tfa-prom'
@@ -52,6 +38,19 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - tfa-prom:/prometheus
+
+  jaeger:
+    container_name: 'tfa-jaeger'
+    image: 'jaegertracing/all-in-one:1.9'
+    environment:
+      COLLECTOR_ZIPKIN_HTTP_PORT: 9411
+    ports:
+      - '5775:5775/udp'
+      - '6831:6831/udp'
+      - '6832:6832/udp'
+      - '5778:5778'
+      - '16686:16686'
+      - '9411:9411'
 
   grafana:
     container_name: 'tfa-grafana'
@@ -65,3 +64,15 @@ services:
       - '3000:3000'
     depends_on:
       - prometheus
+
+  api:
+    build:
+      context: .
+    container_name: 'tfa-api'
+    ports:
+      - '8080:8080'
+    environment:
+      ASPNET_URLS: 'http://0.0.0.0:8080'
+      ConnectionStrings__Postgres: "User ID=postgres;Password=admin;Host=tfa-pg;Port=5432;Database=tfa;Pooling=true;MinPoolSize=0;MaxPoolSize=100;Connection Idle Lifetime=60;"
+      ConnectionStrings__Logs: "http://tfa-loki:3100"
+      ConnectionStrings__Tracing: "http://tfa-jaeger:14268/api/traces"

@@ -5,15 +5,9 @@ using Forum = TFA.API.Models.Forum;
 
 namespace TFA.E2E;
 
-public class TopicEndpointsShould : IClassFixture<ForumApiApplicationFactory>, IAsyncLifetime
+public class TopicEndpointsShould(ForumApiApplicationFactory factory)
+    : IClassFixture<ForumApiApplicationFactory>, IAsyncLifetime
 {
-    private readonly ForumApiApplicationFactory factory;
-
-    public TopicEndpointsShould(ForumApiApplicationFactory factory)
-    {
-        this.factory = factory;
-    }
-
     public Task InitializeAsync() => Task.CompletedTask;
 
     public Task DisposeAsync() => Task.CompletedTask;

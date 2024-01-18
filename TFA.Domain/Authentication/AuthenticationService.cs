@@ -4,24 +4,14 @@ using Microsoft.Extensions.Options;
 
 namespace TFA.Domain.Authentication;
 
-internal class AuthenticationService : IAuthenticationService
+internal class AuthenticationService(
+    ISymmetricDecryptor decryptor,
+    IAuthenticationStorage storage,
+    ILogger<AuthenticationService> logger,
+    IOptions<AuthenticationConfiguration> options)
+    : IAuthenticationService
 {
-    private readonly ISymmetricDecryptor decryptor;
-    private readonly IAuthenticationStorage storage;
-    private readonly ILogger<AuthenticationService> logger;
-    private readonly AuthenticationConfiguration configuration;
-
-    public AuthenticationService(
-        ISymmetricDecryptor decryptor,
-        IAuthenticationStorage storage,
-        ILogger<AuthenticationService> logger,
-        IOptions<AuthenticationConfiguration> options)
-    {
-        this.decryptor = decryptor;
-        this.storage = storage;
-        this.logger = logger;
-        configuration = options.Value;
-    }
+    private readonly AuthenticationConfiguration configuration = options.Value;
 
     public async Task<IIdentity> Authenticate(string authToken, CancellationToken cancellationToken)
     {

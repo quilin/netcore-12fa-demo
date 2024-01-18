@@ -1,0 +1,9 @@
+bin/
+obj/
+*.Tests/
+*.E2E/
+docker-compose.yml
+Dockerfile
+prometheus.yml
+loki-config.yml
+README.md

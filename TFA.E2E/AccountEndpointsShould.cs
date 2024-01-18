@@ -4,16 +4,8 @@ using TFA.Domain.Authentication;
 
 namespace TFA.E2E;
 
-public class AccountEndpointsShould : IClassFixture<ForumApiApplicationFactory>
+public class AccountEndpointsShould(ForumApiApplicationFactory factory) : IClassFixture<ForumApiApplicationFactory>
 {
-    private readonly ForumApiApplicationFactory factory;
-
-    public AccountEndpointsShould(
-        ForumApiApplicationFactory factory)
-    {
-        this.factory = factory;
-    }
-
     [Fact]
     public async Task SignInAfterSignOn()
     {

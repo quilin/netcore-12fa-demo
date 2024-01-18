@@ -6,15 +6,8 @@ using TFA.Domain.Exceptions;
 
 namespace TFA.API.Middlewares;
 
-public class ErrorHandlingMiddleware
+public class ErrorHandlingMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate next;
-
-    public ErrorHandlingMiddleware(RequestDelegate next)
-    {
-        this.next = next;
-    }
-
     public async Task InvokeAsync(
         HttpContext httpContext,
         ILogger<ErrorHandlingMiddleware> logger,

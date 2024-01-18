@@ -1,5 +1,9 @@
-﻿using Serilog;
+﻿using System.Diagnostics;
+using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 using Serilog.Filters;
+using Serilog.Sinks.Grafana.Loki;
 
 namespace TFA.API.Monitoring;
 
@@ -13,8 +17,19 @@ internal static class LoggingServiceCollectionExtensions
             .Enrich.WithProperty("Environment", environment.EnvironmentName)
             .WriteTo.Logger(lc => lc
                 .Filter.ByExcluding(Matching.FromSource("Microsoft"))
-                .WriteTo.OpenSearch(
-                    configuration.GetConnectionString("Logs"),
-                    "forum-logs-{0:yyyy.MM.dd}"))
+                .Enrich.With<TraceEnricher>()
+                .WriteTo.GrafanaLoki(
+                    configuration.GetConnectionString("Logs")!,
+                    propertiesAsLabels: ["Application", "Environment"]))
             .CreateLogger()));
+}
+
+internal class TraceEnricher : ILogEventEnricher
+{
+    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+    {
+        var activity = Activity.Current ?? default;
+        logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("TraceId", activity?.TraceId));
+        logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("SpanId", activity?.SpanId));
+    }
 }

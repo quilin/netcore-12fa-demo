@@ -1,12 +1,12 @@
-﻿using MediatR;
+using MediatR;
 using TFA.Domain.Models;
 using TFA.Domain.Monitoring;
 
-namespace TFA.Domain.UseCases.CreateForum;
+namespace TFA.Domain.UseCases.GetForums;
 
-public record CreateForumCommand(string Title) : IRequest<Forum>, IMonitoredRequest
+public record GetForumsQuery : IRequest<IEnumerable<Forum>>, IMonitoredRequest
 {
-    private const string CounterName = "forums.created";
+    private const string CounterName = "forums.fetched";
     
     public void MonitorSuccess(DomainMetrics metrics) => 
         metrics.IncrementCount(CounterName, 1, DomainMetrics.ResultTags(true));

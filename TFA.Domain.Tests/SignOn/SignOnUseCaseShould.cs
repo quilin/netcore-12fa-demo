@@ -1,6 +1,4 @@
 ﻿using FluentAssertions;
-using FluentValidation;
-using FluentValidation.Results;
 using Moq;
 using Moq.Language.Flow;
 using TFA.Domain.Authentication;
@@ -17,11 +15,6 @@ public class SignOnUseCaseShould
 
     public SignOnUseCaseShould()
     {
-        var validator = new Mock<IValidator<SignOnCommand>>();
-        validator
-            .Setup(v => v.ValidateAsync(It.IsAny<SignOnCommand>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new ValidationResult());
-
         var passwordManager = new Mock<IPasswordManager>();
         generatePasswordPartsSetup = passwordManager.Setup(m => m.GeneratePasswordParts(It.IsAny<string>()));
 
@@ -29,7 +22,7 @@ public class SignOnUseCaseShould
         createUserSetup = storage.Setup(s =>
             s.CreateUser(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<byte[]>(), It.IsAny<CancellationToken>()));
 
-        sut = new SignOnUseCase(validator.Object, passwordManager.Object, storage.Object);
+        sut = new SignOnUseCase(passwordManager.Object, storage.Object);
     }
 
     [Fact]
@@ -39,7 +32,7 @@ public class SignOnUseCaseShould
         var hash = new byte[] { 2 };
         generatePasswordPartsSetup.Returns((Salt: salt, Hash: hash));
 
-        await sut.Execute(new SignOnCommand("Test", "qwerty"), CancellationToken.None);
+        await sut.Handle(new SignOnCommand("Test", "qwerty"), CancellationToken.None);
         
         storage.Verify(s => s.CreateUser("Test", salt, hash, It.IsAny<CancellationToken>()), Times.Once);
         storage.VerifyNoOtherCalls();
@@ -48,10 +41,10 @@ public class SignOnUseCaseShould
     [Fact]
     public async Task ReturnIdentityOfNewlyCreatedUser()
     {
-        generatePasswordPartsSetup.Returns((Salt: new byte[] { 1 }, Hash: new byte[] { 2 }));
+        generatePasswordPartsSetup.Returns((Salt: [1], Hash: [2]));
         createUserSetup.ReturnsAsync(Guid.Parse("7483221E-FE0E-44EE-85B6-94D5279A8988"));
 
-        var actual = await sut.Execute(new SignOnCommand("Test", "qwerty"), CancellationToken.None);
+        var actual = await sut.Handle(new SignOnCommand("Test", "qwerty"), CancellationToken.None);
         actual.UserId.Should().Be(Guid.Parse("7483221E-FE0E-44EE-85B6-94D5279A8988"));
     }
 }
