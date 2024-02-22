@@ -10,7 +10,7 @@ internal class CreateTopicUseCase(
     IIntentionManager intentionManager,
     IIdentityProvider identityProvider,
     IGetForumsStorage getForumsStorage,
-    ICreateTopicStorage storage)
+    IUnitOfWork unitOfWork)
     : IRequestHandler<CreateTopicCommand, Topic>
 {
     public async Task<Topic> Handle(CreateTopicCommand command, CancellationToken cancellationToken)
@@ -20,6 +20,12 @@ internal class CreateTopicUseCase(
 
         await getForumsStorage.ThrowIfForumNotFound(forumId, cancellationToken);
 
-        return await storage.CreateTopic(forumId, identityProvider.Current.UserId, title, cancellationToken);
+        await using var scope = await unitOfWork.StartScope(cancellationToken);
+        var topic = await scope.GetStorage<ICreateTopicStorage>()
+            .CreateTopic(forumId, identityProvider.Current.UserId, title, cancellationToken);
+        await scope.GetStorage<IDomainEventStorage>().AddEvent(topic, cancellationToken);
+        await scope.Commit(cancellationToken);
+
+        return topic;
     }
 }

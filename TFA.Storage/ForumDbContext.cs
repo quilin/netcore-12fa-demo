@@ -10,4 +10,5 @@ public class ForumDbContext(DbContextOptions<ForumDbContext> options) : DbContex
     public DbSet<Topic> Topics { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Session> Sessions { get; set; }
+    public DbSet<DomainEvent> DomainEvents { get; set; }
 }

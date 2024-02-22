@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using TFA.Domain;
 using TFA.Domain.Authentication;
+using TFA.Domain.UseCases;
 using TFA.Domain.UseCases.CreateForum;
 using TFA.Domain.UseCases.CreateTopic;
 using TFA.Domain.UseCases.GetForums;
@@ -18,6 +20,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddForumStorage(this IServiceCollection services, string dbConnectionString)
     {
         services
+            .AddScoped<IDomainEventStorage, DomainEventStorage>()
             .AddScoped<IAuthenticationStorage, AuthenticationStorage>()
             .AddScoped<ICreateForumStorage, CreateForumStorage>()
             .AddScoped<IGetForumsStorage, GetForumsStorage>()
@@ -30,6 +33,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<IMomentProvider, MomentProvider>()
             .AddDbContextPool<ForumDbContext>(options => options
                 .UseNpgsql(dbConnectionString));
+
+        services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
         services.AddMemoryCache();
 
