@@ -8,23 +8,40 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-
 		loki-config.yml = loki-config.yml
 		Dockerfile = Dockerfile
 		.dockerignore = .dockerignore
+		kafka-connect\Dockerfile = kafka-connect\Dockerfile
+		kafka-connect\tfa-source-connector.properties = kafka-connect\tfa-source-connector.properties
+		kafka-connect\worker.properties = kafka-connect\worker.properties
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Domain", "TFA.Domain\TFA.Domain.csproj", "{7E2AA428-F3A6-4A45-BCB8-397BFA382B03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Domain", "TFA.Forums.Domain\TFA.Forums.Domain.csproj", "{7E2AA428-F3A6-4A45-BCB8-397BFA382B03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Storage", "TFA.Storage\TFA.Storage.csproj", "{1F286456-4AF8-492F-91B5-C1833D34949E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Storage", "TFA.Forums.Storage\TFA.Forums.Storage.csproj", "{1F286456-4AF8-492F-91B5-C1833D34949E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.API", "TFA.API\TFA.API.csproj", "{94BB7C2E-DFB3-4D4C-BD50-CE7672E873D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.API", "TFA.Forums.API\TFA.Forums.API.csproj", "{94BB7C2E-DFB3-4D4C-BD50-CE7672E873D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Domain.Tests", "TFA.Domain.Tests\TFA.Domain.Tests.csproj", "{FBD72A7F-3EE6-475F-A4BA-0EC7EE21621D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Domain.Tests", "TFA.Forums.Domain.Tests\TFA.Forums.Domain.Tests.csproj", "{FBD72A7F-3EE6-475F-A4BA-0EC7EE21621D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Domain.DependencyInjection", "TFA.Domain.DependencyInjection\TFA.Domain.DependencyInjection.csproj", "{FB309A46-67D9-4A4B-9020-855A75B9698C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Domain.DependencyInjection", "TFA.Forums.Domain.DependencyInjection\TFA.Forums.Domain.DependencyInjection.csproj", "{FB309A46-67D9-4A4B-9020-855A75B9698C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Storage.DependencyInjection", "TFA.Storage.DependencyInjection\TFA.Storage.DependencyInjection.csproj", "{22B0E6F3-C5FE-45D1-B5AB-3703F869A771}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Storage.DependencyInjection", "TFA.Forums.Storage.DependencyInjection\TFA.Forums.Storage.DependencyInjection.csproj", "{22B0E6F3-C5FE-45D1-B5AB-3703F869A771}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.E2E", "TFA.E2E\TFA.E2E.csproj", "{0745B0CA-116D-4E39-8DBD-462344FB3615}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.E2E", "TFA.Forums.E2E\TFA.Forums.E2E.csproj", "{0745B0CA-116D-4E39-8DBD-462344FB3615}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Storage.Tests", "TFA.Storage.Tests\TFA.Storage.Tests.csproj", "{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Storage.Tests", "TFA.Forums.Storage.Tests\TFA.Forums.Storage.Tests.csproj", "{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TFA.Forum", "TFA.Forum", "{4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TFA.Search", "TFA.Search", "{C5298F98-57ED-422B-A2A8-99FD75C93D09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.API", "TFA.Search.API\TFA.Search.API.csproj", "{38603556-7918-4C30-8A0F-2B3309E42EAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Domain", "TFA.Search.Domain\TFA.Search.Domain.csproj", "{FCFCA675-3C7A-4CCA-91D4-A104747CB870}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Storage", "TFA.Search.Storage\TFA.Search.Storage.csproj", "{A3E02644-DA26-4455-86BF-851D3D6A4949}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Domain.DependencyInjection", "TFA.Search.Domain.DependencyInjection\TFA.Search.Domain.DependencyInjection.csproj", "{87CA9C44-65D5-4F08-A83A-89BD7EDA5F2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Storage.DependencyInjection", "TFA.Search.Storage.DependencyInjection\TFA.Search.Storage.DependencyInjection.csproj", "{32516455-D108-4FAF-A396-7CCF02AB2328}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,5 +81,40 @@ Global
 		{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38603556-7918-4C30-8A0F-2B3309E42EAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38603556-7918-4C30-8A0F-2B3309E42EAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38603556-7918-4C30-8A0F-2B3309E42EAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38603556-7918-4C30-8A0F-2B3309E42EAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCFCA675-3C7A-4CCA-91D4-A104747CB870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCFCA675-3C7A-4CCA-91D4-A104747CB870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCFCA675-3C7A-4CCA-91D4-A104747CB870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCFCA675-3C7A-4CCA-91D4-A104747CB870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3E02644-DA26-4455-86BF-851D3D6A4949}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3E02644-DA26-4455-86BF-851D3D6A4949}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3E02644-DA26-4455-86BF-851D3D6A4949}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3E02644-DA26-4455-86BF-851D3D6A4949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87CA9C44-65D5-4F08-A83A-89BD7EDA5F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87CA9C44-65D5-4F08-A83A-89BD7EDA5F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87CA9C44-65D5-4F08-A83A-89BD7EDA5F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87CA9C44-65D5-4F08-A83A-89BD7EDA5F2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32516455-D108-4FAF-A396-7CCF02AB2328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32516455-D108-4FAF-A396-7CCF02AB2328}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32516455-D108-4FAF-A396-7CCF02AB2328}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32516455-D108-4FAF-A396-7CCF02AB2328}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7E2AA428-F3A6-4A45-BCB8-397BFA382B03} = {4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}
+		{FB309A46-67D9-4A4B-9020-855A75B9698C} = {4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}
+		{FBD72A7F-3EE6-475F-A4BA-0EC7EE21621D} = {4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}
+		{0745B0CA-116D-4E39-8DBD-462344FB3615} = {4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}
+		{1F286456-4AF8-492F-91B5-C1833D34949E} = {4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}
+		{22B0E6F3-C5FE-45D1-B5AB-3703F869A771} = {4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}
+		{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4} = {4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}
+		{38603556-7918-4C30-8A0F-2B3309E42EAD} = {C5298F98-57ED-422B-A2A8-99FD75C93D09}
+		{FCFCA675-3C7A-4CCA-91D4-A104747CB870} = {C5298F98-57ED-422B-A2A8-99FD75C93D09}
+		{A3E02644-DA26-4455-86BF-851D3D6A4949} = {C5298F98-57ED-422B-A2A8-99FD75C93D09}
+		{87CA9C44-65D5-4F08-A83A-89BD7EDA5F2B} = {C5298F98-57ED-422B-A2A8-99FD75C93D09}
+		{32516455-D108-4FAF-A396-7CCF02AB2328} = {C5298F98-57ED-422B-A2A8-99FD75C93D09}
+		{94BB7C2E-DFB3-4D4C-BD50-CE7672E873D3} = {4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}
 	EndGlobalSection
 EndGlobal

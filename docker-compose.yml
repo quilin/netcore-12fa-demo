@@ -9,6 +9,7 @@ volumes:
   tfa-logs:
   tfa-prom:
   tfa-grafana:
+  tfa-os:
 
 services: 
   postgres:
@@ -65,14 +66,83 @@ services:
     depends_on:
       - prometheus
 
-  api:
-    build:
-      context: .
-    container_name: 'tfa-api'
-    ports:
-      - '8080:8080'
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.0
+    container_name: tfa-zk
     environment:
-      ASPNET_URLS: 'http://0.0.0.0:8080'
-      ConnectionStrings__Postgres: "User ID=postgres;Password=admin;Host=tfa-pg;Port=5432;Database=tfa;Pooling=true;MinPoolSize=0;MaxPoolSize=100;Connection Idle Lifetime=60;"
-      ConnectionStrings__Logs: "http://tfa-loki:3100"
-      ConnectionStrings__Tracing: "http://tfa-jaeger:14268/api/traces"
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka-broker:
+    image: confluentinc/cp-kafka:7.6.0
+    container_name: tfa-kb
+    ports:
+      - '9092:9092'
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: tfa-zk:2181
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://tfa-kb:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+    depends_on:
+      - zookeeper
+
+  kafka-connect:
+    image: kafka-connect-jdbc:local-new
+    build:
+      context: ./kafka-connect
+    container_name: tfa-jdbc-connect
+    ports:
+      - '8083:8083'
+    depends_on:
+      - kafka-broker
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: tfa-kui
+    ports:
+      - '8082:8080'
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local-docker
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: tfa-kb:29092
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: domain-events-outbox
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://tfa-jdbc-connect:8083
+    depends_on:
+      - kafka-broker
+      - kafka-connect
+
+  opensearch:
+    image: opensearchproject/opensearch:2.9.0
+    container_name: tfa-os
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+    environment:
+      discovery.type: single-node
+      plugins.security.disabled: 'true'
+    volumes:
+      - tfa-os:/usr/share/opensearch/data
+  
+  opensearch-dashboard:
+    image: opensearchproject/opensearch-dashboards:2.9.0
+    container_name: tfa-osd
+    ports:
+      - "5601:5601"
+    environment:
+      OPENSEARCH_HOSTS: '["http://tfa-os:9200"]'
+      DISABLE_SECURITY_DASHBOARDS_PLUGIN: 'true'
+    depends_on:
+      - opensearch
+
+#  api:
+#    build:
+#      context: .
+#    container_name: 'tfa-api'
+#    ports:
+#      - '8080:8080'
+#    environment:
+#      ASPNET_URLS: 'http://0.0.0.0:8080'
+#      ConnectionStrings__Postgres: "User ID=postgres;Password=admin;Host=tfa-pg;Port=5432;Database=tfa;Pooling=true;MinPoolSize=0;MaxPoolSize=100;Connection Idle Lifetime=60;"
+#      ConnectionStrings__Logs: "http://tfa-loki:3100"
+#      ConnectionStrings__Tracing: "http://tfa-jaeger:14268/api/traces"
