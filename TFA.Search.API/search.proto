@@ -1,0 +1,41 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "TFA.Search.API.Grpc";
+
+import "google/protobuf/empty.proto";
+
+service SearchEngine {
+  rpc Index(IndexRequest) returns (google.protobuf.Empty);
+  rpc Search(SearchRequest) returns (SearchResponse);
+}
+
+enum SearchEntityType {
+  UNKNOWN = 0;
+  FORUM_TOPIC = 1;
+  FORUM_COMMENT = 2;
+}
+
+message IndexRequest {
+  string id = 1;
+  SearchEntityType type = 2;
+  string title = 3;
+  string text = 4;
+}
+
+message SearchRequest {
+  string query = 1;
+  repeated SearchEntityType searchIn = 2;
+  int32 skip = 3;
+  int32 size = 4;
+}
+
+message SearchResponse {
+  int32 total = 1;
+  repeated SearchResultEntity entities = 2;
+
+  message SearchResultEntity {
+    string id = 1;
+    SearchEntityType type = 2;
+    repeated string highlights = 3;
+  }
+}

@@ -5,7 +5,7 @@ using Serilog.Events;
 using Serilog.Filters;
 using Serilog.Sinks.Grafana.Loki;
 
-namespace TFA.Forums.API.Monitoring;
+namespace TFA.Search.API.Monitoring;
 
 internal static class LoggingServiceCollectionExtensions
 {
@@ -13,7 +13,7 @@ internal static class LoggingServiceCollectionExtensions
         IConfiguration configuration, IWebHostEnvironment environment) =>
         services.AddLogging(b => b.AddSerilog(new LoggerConfiguration()
             .MinimumLevel.Debug()
-            .Enrich.WithProperty("Application", "TFA.Forums.API")
+            .Enrich.WithProperty("Application", "TFA.Search.API")
             .Enrich.WithProperty("Environment", environment.EnvironmentName)
             .WriteTo.Logger(lc => lc
                 .Filter.ByExcluding(Matching.FromSource("Microsoft"))

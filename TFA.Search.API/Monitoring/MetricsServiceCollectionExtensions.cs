@@ -2,7 +2,7 @@
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace TFA.Forums.API.Monitoring;
+namespace TFA.Search.API.Monitoring;
 
 internal static class MetricsServiceCollectionExtensions
 {
@@ -13,10 +13,10 @@ internal static class MetricsServiceCollectionExtensions
             .AddOpenTelemetry()
             .WithMetrics(builder => builder
                 .AddAspNetCoreInstrumentation()
-                .AddMeter("TFA.Forums.Domain")
+                .AddMeter("TFA.Search.Domain")
                 .AddPrometheusExporter())
             .WithTracing(builder => builder
-                .ConfigureResource(r => r.AddService("TFA.Forums"))
+                .ConfigureResource(r => r.AddService("TFA.Search"))
                 .AddAspNetCoreInstrumentation(options =>
                 {
                     options.Filter += context =>
@@ -25,7 +25,7 @@ internal static class MetricsServiceCollectionExtensions
                     options.EnrichWithHttpResponse = (activity, response) =>
                         activity.AddTag("error", response.StatusCode >= 400);
                 })
-                .AddEntityFrameworkCoreInstrumentation(options => options.SetDbStatementForText = true)
+                .AddHttpClientInstrumentation()
                 .AddJaegerExporter(cfg => cfg.Endpoint = new Uri(configuration.GetConnectionString("Tracing")!)));
 
         return services;

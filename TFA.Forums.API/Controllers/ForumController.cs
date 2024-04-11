@@ -35,7 +35,8 @@ public class ForumController(
     /// <returns></returns>
     [HttpGet(Name = nameof(GetForums))]
     [ProducesResponseType(200, Type = typeof(Forum[]))]
-    public async Task<IActionResult> GetForums(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetForums(
+        CancellationToken cancellationToken)
     {
         var forums = await mediator.Send(new GetForumsQuery(), cancellationToken);
         return Ok(forums.Select(mapper.Map<Forum>));
