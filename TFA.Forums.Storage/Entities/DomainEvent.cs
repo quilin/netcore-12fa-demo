@@ -9,6 +9,8 @@ public class DomainEvent
     
     public DateTimeOffset EmittedAt { get; set; }
 
+    public string ActivityContext { get; set; }
+
     [Required]
     public byte[] ContentBlob { get; set; }
 }

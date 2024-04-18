@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using TFA.Forums.Domain.Authentication;
 using TFA.Forums.Domain.Authorization;
+using TFA.Forums.Domain.DomainEvents;
 using TFA.Forums.Domain.Models;
 using TFA.Forums.Domain.UseCases.GetForums;
 
@@ -23,7 +24,8 @@ internal class CreateTopicUseCase(
         await using var scope = await unitOfWork.StartScope(cancellationToken);
         var topic = await scope.GetStorage<ICreateTopicStorage>()
             .CreateTopic(forumId, identityProvider.Current.UserId, title, cancellationToken);
-        await scope.GetStorage<IDomainEventStorage>().AddEvent(topic, cancellationToken);
+        await scope.GetStorage<IDomainEventStorage>()
+            .AddEvent(ForumDomainEvent.TopicCreated(topic), cancellationToken);
         await scope.Commit(cancellationToken);
 
         return topic;

@@ -16,7 +16,7 @@ internal static class MetricsServiceCollectionExtensions
                 .AddMeter("TFA.Forums.Domain")
                 .AddPrometheusExporter())
             .WithTracing(builder => builder
-                .ConfigureResource(r => r.AddService("TFA.Forums"))
+                .ConfigureResource(r => r.AddService("TFA.Forums.API"))
                 .AddAspNetCoreInstrumentation(options =>
                 {
                     options.Filter += context =>

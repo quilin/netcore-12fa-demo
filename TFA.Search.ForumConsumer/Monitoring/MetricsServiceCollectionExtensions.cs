@@ -13,10 +13,9 @@ internal static class MetricsServiceCollectionExtensions
             .AddOpenTelemetry()
             .WithMetrics(builder => builder
                 .AddAspNetCoreInstrumentation()
-                .AddMeter("TFA.Search.Domain")
                 .AddPrometheusExporter())
             .WithTracing(builder => builder
-                .ConfigureResource(r => r.AddService("TFA.Search.API"))
+                .ConfigureResource(r => r.AddService("TFA.Search.ForumConsumer"))
                 .AddAspNetCoreInstrumentation(options =>
                 {
                     options.Filter += context =>
@@ -25,6 +24,8 @@ internal static class MetricsServiceCollectionExtensions
                     options.EnrichWithHttpResponse = (activity, response) =>
                         activity.AddTag("error", response.StatusCode >= 400);
                 })
+                .AddSource("ForumSearchConsumer")
+                .AddGrpcClientInstrumentation()
                 .AddHttpClientInstrumentation()
                 .AddJaegerExporter(cfg => cfg.Endpoint = new Uri(configuration.GetConnectionString("Tracing")!)));
 

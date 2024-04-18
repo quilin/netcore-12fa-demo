@@ -1,6 +1,8 @@
-﻿namespace TFA.Forums.Domain.UseCases;
+﻿using TFA.Forums.Domain.DomainEvents;
+
+namespace TFA.Forums.Domain.UseCases;
 
 public interface IDomainEventStorage : IStorage
 {
-    Task AddEvent<TDomainEntity>(TDomainEntity entity, CancellationToken cancellationToken);
+    Task AddEvent(ForumDomainEvent domainEvent, CancellationToken cancellationToken);
 }
