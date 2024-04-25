@@ -1,6 +1,7 @@
 ﻿using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using TFA.Search.ForumConsumer.Monitoring;
 
 namespace TFA.Search.API.Monitoring;
 
@@ -24,7 +25,7 @@ internal static class MetricsServiceCollectionExtensions
                     options.EnrichWithHttpResponse = (activity, response) =>
                         activity.AddTag("error", response.StatusCode >= 400);
                 })
-                .AddSource("ForumSearchConsumer")
+                .AddSource(Metrics.ApplicationName)
                 .AddGrpcClientInstrumentation()
                 .AddHttpClientInstrumentation()
                 .AddJaegerExporter(cfg => cfg.Endpoint = new Uri(configuration.GetConnectionString("Tracing")!)));

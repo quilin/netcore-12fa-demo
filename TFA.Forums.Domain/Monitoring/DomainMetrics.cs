@@ -6,12 +6,12 @@ namespace TFA.Forums.Domain.Monitoring;
 
 public class DomainMetrics(IMeterFactory meterFactory)
 {
-    private const string ApplicationName = "TFA.Forums.Domain";
-    
+    public const string ApplicationName = "TFA.Forums.Domain";
+
     private readonly Meter meter = meterFactory.Create(ApplicationName);
     private readonly ConcurrentDictionary<string, Counter<int>> counters = new();
 
-    public static readonly ActivitySource ActivitySource = new(ApplicationName);
+    internal static readonly ActivitySource ActivitySource = new(ApplicationName);
 
     public void IncrementCount(string name, int value, IDictionary<string, object?>? additionalTags = null)
     {

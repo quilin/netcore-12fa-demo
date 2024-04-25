@@ -35,4 +35,8 @@
         <ProjectReference Include="..\TFA.Forums.Storage.DependencyInjection\TFA.Forums.Storage.DependencyInjection.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Properties\launchSettings.json" />
+    </ItemGroup>
+
 </Project>

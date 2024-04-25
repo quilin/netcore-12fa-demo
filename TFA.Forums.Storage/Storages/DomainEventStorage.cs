@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
 using AutoMapper;
 using TFA.Forums.Domain.UseCases;
 using TFA.Forums.Storage.Entities;
@@ -20,7 +21,8 @@ internal class DomainEventStorage(
         {
             DomainEventId = guidFactory.Create(),
             EmittedAt = momentProvider.Now,
-            ContentBlob = JsonSerializer.SerializeToUtf8Bytes(storageDomainEvent)
+            ContentBlob = JsonSerializer.SerializeToUtf8Bytes(storageDomainEvent),
+            ActivityId = Activity.Current?.Id
         }, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
     }

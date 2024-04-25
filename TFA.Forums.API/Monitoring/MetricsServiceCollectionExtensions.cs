@@ -1,6 +1,7 @@
 ﻿using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using TFA.Forums.Domain.Monitoring;
 
 namespace TFA.Forums.API.Monitoring;
 
@@ -13,10 +14,11 @@ internal static class MetricsServiceCollectionExtensions
             .AddOpenTelemetry()
             .WithMetrics(builder => builder
                 .AddAspNetCoreInstrumentation()
-                .AddMeter("TFA.Forums.Domain")
+                .AddMeter(DomainMetrics.ApplicationName)
                 .AddPrometheusExporter())
             .WithTracing(builder => builder
                 .ConfigureResource(r => r.AddService("TFA.Forums.API"))
+                .AddSource(DomainMetrics.ApplicationName)
                 .AddAspNetCoreInstrumentation(options =>
                 {
                     options.Filter += context =>
