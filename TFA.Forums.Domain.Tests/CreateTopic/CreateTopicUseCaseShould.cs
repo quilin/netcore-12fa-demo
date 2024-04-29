@@ -3,6 +3,7 @@ using Moq;
 using Moq.Language.Flow;
 using TFA.Forums.Domain.Authentication;
 using TFA.Forums.Domain.Authorization;
+using TFA.Forums.Domain.Authorization.AccessManagement;
 using TFA.Forums.Domain.Exceptions;
 using TFA.Forums.Domain.Models;
 using TFA.Forums.Domain.UseCases;

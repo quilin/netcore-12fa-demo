@@ -1,7 +1,7 @@
 ﻿using TFA.Forums.Domain.Authentication;
-using TFA.Forums.Domain.Authorization;
+using TFA.Forums.Domain.Authorization.AccessManagement;
 
-namespace TFA.Forums.Domain.UseCases.SignOut;
+namespace TFA.Forums.Domain.Authorization;
 
 internal class AccountIntentionResolver : IIntentionResolver<AccountIntention>
 {

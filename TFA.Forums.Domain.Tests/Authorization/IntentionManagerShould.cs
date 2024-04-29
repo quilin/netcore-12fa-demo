@@ -3,8 +3,8 @@ using FluentAssertions;
 using Moq;
 using TFA.Forums.Domain.Authentication;
 using TFA.Forums.Domain.Authorization;
+using TFA.Forums.Domain.Authorization.AccessManagement;
 using TFA.Forums.Domain.Exceptions;
-using TFA.Forums.Domain.UseCases.CreateForum;
 
 namespace TFA.Forums.Domain.Tests.Authorization;
 

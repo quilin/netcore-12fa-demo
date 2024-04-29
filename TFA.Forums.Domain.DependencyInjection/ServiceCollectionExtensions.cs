@@ -2,10 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using TFA.Forums.Domain.Authentication;
 using TFA.Forums.Domain.Authorization;
+using TFA.Forums.Domain.Authorization.AccessManagement;
 using TFA.Forums.Domain.Models;
 using TFA.Forums.Domain.Monitoring;
-using TFA.Forums.Domain.UseCases.CreateForum;
-using TFA.Forums.Domain.UseCases.CreateTopic;
 
 namespace TFA.Forums.Domain.DependencyInjection;
 

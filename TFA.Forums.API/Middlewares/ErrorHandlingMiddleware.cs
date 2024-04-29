@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using TFA.Forums.Domain.Authorization;
+using TFA.Forums.Domain.Authorization.AccessManagement;
 using TFA.Forums.Domain.Exceptions;
 
 namespace TFA.Forums.API.Middlewares;

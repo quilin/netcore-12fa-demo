@@ -9,5 +9,6 @@ internal class ApiProfile : Profile
     {
         CreateMap<Forum, Models.Forum>();
         CreateMap<Topic, Models.Topic>();
+        CreateMap<Comment, Models.Comment>();
     }
 }

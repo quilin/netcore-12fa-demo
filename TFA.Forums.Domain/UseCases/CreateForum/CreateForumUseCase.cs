@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using TFA.Forums.Domain.Authorization;
+using TFA.Forums.Domain.Authorization.AccessManagement;
 using TFA.Forums.Domain.Models;
 
 namespace TFA.Forums.Domain.UseCases.CreateForum;

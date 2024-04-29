@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using TFA.Forums.Domain.Models;
 using TFA.Forums.Domain.UseCases.CreateTopic;
 
@@ -6,6 +8,7 @@ namespace TFA.Forums.Storage.Storages;
 
 internal class CreateTopicStorage(
     IGuidFactory guidFactory,
+    IMapper mapper,
     IMomentProvider momentProvider,
     ForumDbContext dbContext)
     : ICreateTopicStorage
@@ -28,14 +31,7 @@ internal class CreateTopicStorage(
 
         return await dbContext.Topics
             .Where(t => t.TopicId == topicId)
-            .Select(t => new Topic
-            {
-                Id = t.TopicId,
-                ForumId = t.ForumId,
-                UserId = t.UserId,
-                Title = t.Title,
-                CreatedAt = t.CreatedAt
-            })
+            .ProjectTo<Topic>(mapper.ConfigurationProvider)
             .FirstAsync(cancellationToken);
     }
 }

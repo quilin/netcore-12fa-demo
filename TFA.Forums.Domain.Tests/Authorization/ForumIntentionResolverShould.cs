@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using TFA.Forums.Domain.Authentication;
-using TFA.Forums.Domain.UseCases.CreateForum;
+using TFA.Forums.Domain.Authorization;
 
 namespace TFA.Forums.Domain.Tests.Authorization;
 

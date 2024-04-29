@@ -26,8 +26,19 @@ public class ForumDomainEvent
     {
         EventType = ForumDomainEventType.TopicCreated,
         TopicId = topic.Id,
+        Title = topic.Title
+    };
+
+    public static ForumDomainEvent CommentCreated(Topic topic, Comment comment) => new()
+    {
+        EventType = ForumDomainEventType.CommentCreated,
+        TopicId = topic.Id,
         Title = topic.Title,
-        Comment = new ForumComment()
+        Comment = new ForumComment
+        {
+            CommentId = comment.Id,
+            Text = comment.Text
+        }
     };
 }
 

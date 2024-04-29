@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TFA.Forums.Domain;
 using TFA.Forums.Domain.Authentication;
 using TFA.Forums.Domain.UseCases;
+using TFA.Forums.Domain.UseCases.CreateComment;
 using TFA.Forums.Domain.UseCases.CreateForum;
 using TFA.Forums.Domain.UseCases.CreateTopic;
 using TFA.Forums.Domain.UseCases.GetForums;
@@ -26,6 +27,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IGetForumsStorage, GetForumsStorage>()
             .AddScoped<ICreateTopicStorage, CreateTopicStorage>()
             .AddScoped<IGetTopicsStorage, GetTopicsStorage>()
+            .AddScoped<ICreateCommentStorage, CreateCommentStorage>()
             .AddScoped<ISignOnStorage, SignOnStorage>()
             .AddScoped<ISignInStorage, SignInStorage>()
             .AddScoped<ISignOutStorage, SignOutStorage>()

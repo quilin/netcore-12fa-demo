@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using TFA.Forums.Domain.Authentication;
 using TFA.Forums.Domain.Authorization;
+using TFA.Forums.Domain.Authorization.AccessManagement;
 using TFA.Forums.Domain.DomainEvents;
 using TFA.Forums.Domain.Models;
 using TFA.Forums.Domain.UseCases.GetForums;
