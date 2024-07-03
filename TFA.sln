@@ -3,14 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-items", "{12EFCF49-F8ED-4678-B0AE-83DBB031ED5F}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
-		docker-compose.yml = docker-compose.yml
-		prometheus.yml = prometheus.yml
-		loki-config.yml = loki-config.yml
-		Dockerfile = Dockerfile
-		.dockerignore = .dockerignore
-		kafka-connect\Dockerfile = kafka-connect\Dockerfile
-		kafka-connect\tfa-source-connector.properties = kafka-connect\tfa-source-connector.properties
-		kafka-connect\worker.properties = kafka-connect\worker.properties
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Domain", "TFA.Forums.Domain\TFA.Forums.Domain.csproj", "{7E2AA428-F3A6-4A45-BCB8-397BFA382B03}"
@@ -44,6 +36,26 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Storage.DependencyInjection", "TFA.Search.Storage.DependencyInjection\TFA.Search.Storage.DependencyInjection.csproj", "{32516455-D108-4FAF-A396-7CCF02AB2328}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.ForumConsumer", "TFA.Search.ForumConsumer\TFA.Search.ForumConsumer.csproj", "{9BD3120B-0140-4BD7-8BCF-52D7B4A5660E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{BF9DA26C-BFCB-4083-98E6-E9070D668B7F}"
+	ProjectSection(SolutionItems) = preProject
+		docker\Dockerfile = docker\Dockerfile
+		docker\docker-compose.yml = docker\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kafka", "kafka", "{253AC436-8E89-4182-827C-D65CDDA8B479}"
+	ProjectSection(SolutionItems) = preProject
+		docker\kafka-connect\Dockerfile = docker\kafka-connect\Dockerfile
+		docker\.dockerignore = docker\.dockerignore
+		docker\kafka-connect\tfa-source-connector.properties = docker\kafka-connect\tfa-source-connector.properties
+		docker\kafka-connect\worker.properties = docker\kafka-connect\worker.properties
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "monitoring", "monitoring", "{7BDC13AE-C6CA-4977-BD6C-1B3D619F3E0B}"
+	ProjectSection(SolutionItems) = preProject
+		docker\loki-config.yml = docker\loki-config.yml
+		docker\prometheus.yml = docker\prometheus.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,5 +135,8 @@ Global
 		{32516455-D108-4FAF-A396-7CCF02AB2328} = {C5298F98-57ED-422B-A2A8-99FD75C93D09}
 		{94BB7C2E-DFB3-4D4C-BD50-CE7672E873D3} = {4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}
 		{9BD3120B-0140-4BD7-8BCF-52D7B4A5660E} = {C5298F98-57ED-422B-A2A8-99FD75C93D09}
+		{BF9DA26C-BFCB-4083-98E6-E9070D668B7F} = {12EFCF49-F8ED-4678-B0AE-83DBB031ED5F}
+		{253AC436-8E89-4182-827C-D65CDDA8B479} = {BF9DA26C-BFCB-4083-98E6-E9070D668B7F}
+		{7BDC13AE-C6CA-4977-BD6C-1B3D619F3E0B} = {BF9DA26C-BFCB-4083-98E6-E9070D668B7F}
 	EndGlobalSection
 EndGlobal

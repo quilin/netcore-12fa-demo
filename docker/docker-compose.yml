@@ -137,7 +137,7 @@ services:
 
 #  api:
 #    build:
-#      context: .
+#      context: ./..
 #    container_name: 'tfa-api'
 #    ports:
 #      - '8080:8080'
