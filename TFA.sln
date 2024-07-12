@@ -57,6 +57,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "monitoring", "monitoring", 
 		docker\prometheus.yml = docker\prometheus.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gitlab", "gitlab", "{39985F57-0F0B-4647-A653-29E6531976E3}"
+	ProjectSection(SolutionItems) = preProject
+		docker\gitlab\docker-compose.yml = docker\gitlab\docker-compose.yml
+		docker\gitlab\runner-config.toml = docker\gitlab\runner-config.toml
+		.gitlab-ci.yml = .gitlab-ci.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,5 +145,6 @@ Global
 		{BF9DA26C-BFCB-4083-98E6-E9070D668B7F} = {12EFCF49-F8ED-4678-B0AE-83DBB031ED5F}
 		{253AC436-8E89-4182-827C-D65CDDA8B479} = {BF9DA26C-BFCB-4083-98E6-E9070D668B7F}
 		{7BDC13AE-C6CA-4977-BD6C-1B3D619F3E0B} = {BF9DA26C-BFCB-4083-98E6-E9070D668B7F}
+		{39985F57-0F0B-4647-A653-29E6531976E3} = {BF9DA26C-BFCB-4083-98E6-E9070D668B7F}
 	EndGlobalSection
 EndGlobal

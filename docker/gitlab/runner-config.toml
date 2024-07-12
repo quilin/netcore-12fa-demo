@@ -1,0 +1,4 @@
+#[[runners]]
+#  [runners.docker]
+#    privileged = true                              <-- change THIS to true
+#    network_mode = 'gitlab'                        <-- add THIS with value from docker-compose network

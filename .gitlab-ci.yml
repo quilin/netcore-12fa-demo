@@ -1,0 +1,72 @@
+image: mcr.microsoft.com/dotnet/sdk:8.0
+
+variables:
+  OBJECTS_DIRECTORY: 'obj'
+  NUGET_PACKAGES_DIRECTORY: '.nuget'
+  SOURCE_CODE_PATH: '*/*/'
+
+stages:
+  - build
+  - test
+  - delivery
+
+cache:
+  # Per-stage and per-branch caching.
+  key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+  paths:
+    - '$SOURCE_CODE_PATH$OBJECTS_DIRECTORY/project.assets.json'
+    - '$SOURCE_CODE_PATH$OBJECTS_DIRECTORY/*.csproj.nuget.*'
+    - '$NUGET_PACKAGES_DIRECTORY'
+  policy: pull-push
+
+before_script:
+  - 'dotnet restore --packages $NUGET_PACKAGES_DIRECTORY'
+
+# Зарегистрируйте раннер в гитлабе через интерфейс гитлаба и docker exec (или через морду Docker for Desktop)
+# инструкция по регистрации в самом гитлабе
+build:
+  stage: build
+  script:
+    - 'dotnet build --no-restore'
+
+# Измените файл runner-config, чтобы в нем у зарегистрированного раннера были указаны
+# network_mode = '<имя докер сети>' и privileged = true
+tests:
+  stage: test
+  services:
+    - name: docker:20.10.24-dind
+      alias: testdocker
+      command: ["--tls=false"]
+  variables:
+    DOCKER_HOST: "tcp://testdocker:2375"
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_DRIVER: overlay2
+  artifacts:
+    paths:
+      - testreport/*.html
+    expire_in: 1 hour
+  script:
+    - 'dotnet test --no-restore --logger html --results-directory testreport'
+
+# Обновите файл gitlab.rb в вольюме gl-config: найдите там registry_external_url
+# и подставьте туда хостнейм самого гитлаба с незанятым портом отличным от 5000
+# например, как указано тут: gitlab.example.com:5050
+docker:
+  stage: delivery
+  image: docker:20.10.24
+  services:
+    - name: docker:20.10.24-dind
+      alias: testdocker
+      command: ["--tls=false", "--insecure-registry=gitlab.example.com:5050"]
+      # запихать переменную $CI_REGISTRY сюда, чтобы не хардкодить
+      # можно вот так: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/3808
+      # ишье 5 лет :(
+  variables:
+    DOCKER_HOST: "tcp://testdocker:2375"
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_DRIVER: overlay2
+  before_script: []
+  script:
+    - 'docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY'
+    - 'docker build -t $CI_REGISTRY_IMAGE/forums:$CI_COMMIT_SHORT_SHA -f ./docker/Dockerfile .'
+    - 'docker push $CI_REGISTRY_IMAGE/forums:$CI_COMMIT_SHORT_SHA'

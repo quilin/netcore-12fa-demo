@@ -1,0 +1,55 @@
+version: '3.9'
+
+name: 'gitlab'
+
+networks:
+  default:
+    name: 'gitlab'
+
+volumes:
+  gl-config:
+  gl-logs:
+  gl-data:
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    hostname: 'gitlab.example.com'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.example.com:8929'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2224
+    ports:
+      - '8929:8929'
+      - '2224:22'
+      - '5050:5050'
+    volumes:
+      - 'gl-config:/etc/gitlab'
+      - 'gl-logs:/var/log/gitlab'
+      - 'gl-data:/var/opt/gitlab'
+    shm_size: '256m'
+
+  runner-1:
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    hostname: 'gitlab.runner-1.com'
+    ports:
+      - '8093:8093'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - './runner-config.toml:/etc/gitlab-runner/config.toml'
+
+  schema-registry-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: apicurio-registry
+      POSTGRES_PASSWORD: password
+
+  schema-registry:
+    image: 'apicurio/apicurio-registry-sql:latest-release'
+    ports:
+      - '8085:8080'
+    environment:
+      REGISTRY_DATASOURCE_URL: jdbc:postgresql://schema-registry-db/apicurio-registry
+      REGISTRY_DATASOURCE_USERNAME: apicurio-registry
+      REGISTRY_DATASOURCE_PASSWORD: password
