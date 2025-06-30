@@ -57,7 +57,7 @@ docker:
   services:
     - name: docker:20.10.24-dind
       alias: testdocker
-      command: ["--tls=false", "--insecure-registry=gitlab.example.com:5050"]
+      command: ["--tls=false", "--insecure-registry=host.docker.internal:5050"]
       # запихать переменную $CI_REGISTRY сюда, чтобы не хардкодить
       # можно вот так: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/3808
       # ишье 5 лет :(

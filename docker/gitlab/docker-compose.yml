@@ -1,55 +1,53 @@
-version: '3.9'
-
-name: 'gitlab'
-
 networks:
   default:
-    name: 'gitlab'
+    name: gitlab
 
 volumes:
-  gl-config:
-  gl-logs:
-  gl-data:
+  gitlab-data:
+  gitlab-conf:
+  gitlab-logs:
 
 services:
   gitlab:
+    container_name: gitlab
     image: gitlab/gitlab-ce:latest
-    hostname: 'gitlab.example.com'
+    hostname: gitlab.example.com
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab.example.com:8929'
+        external_url = 'http://gitlab.example.com'
+        registry_external_url = 'http://registry.example.com:5050'
+
+        registry['enable'] = true
+        registry['env'] = {
+          "REGISTRY_HTTP_RELATIVEURLS" => true
+        }
+        registry['registry_http_addr'] = '127.0.0.1:5000'
+
+        gitlab_rails['token_realm'] = 'http://host.docker.internal'
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
+        gitlab_rails['registry_enabled'] = true
+        gitlab_rails['registry_host'] = 'host.docker.internal'
+        gitlab_rails['registry_port'] = 5050
+
+        registry_nginx['listen_port'] = 5050
+        registry_nginx['redirect_http_to_https'] = false
     ports:
-      - '8929:8929'
+      - '80:80'
       - '2224:22'
       - '5050:5050'
     volumes:
-      - 'gl-config:/etc/gitlab'
-      - 'gl-logs:/var/log/gitlab'
-      - 'gl-data:/var/opt/gitlab'
+      - gitlab-data:/var/opt/gitlab
+      - gitlab-conf:/etc/gitlab
+      - gitlab-logs:/var/log/gitlab
     shm_size: '256m'
 
   runner-1:
+    container_name: runner-1
     image: gitlab/gitlab-runner:latest
     restart: always
-    hostname: 'gitlab.runner-1.com'
+    hostname: gitlab.runner-1.com
     ports:
       - '8093:8093'
     volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
-      - './runner-config.toml:/etc/gitlab-runner/config.toml'
-
-  schema-registry-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: apicurio-registry
-      POSTGRES_PASSWORD: password
-
-  schema-registry:
-    image: 'apicurio/apicurio-registry-sql:latest-release'
-    ports:
-      - '8085:8080'
-    environment:
-      REGISTRY_DATASOURCE_URL: jdbc:postgresql://schema-registry-db/apicurio-registry
-      REGISTRY_DATASOURCE_USERNAME: apicurio-registry
-      REGISTRY_DATASOURCE_PASSWORD: password
+      - ./runner-config.toml:/etc/gitlab-runner/config.toml
+      - /var/run/docker.sock:/var/run/docker.sock
