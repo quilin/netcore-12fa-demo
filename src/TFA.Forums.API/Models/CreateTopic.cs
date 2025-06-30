@@ -2,5 +2,5 @@
 
 public class CreateTopic
 {
-    public string Title { get; set; }
+    public required string Title { get; set; }
 }

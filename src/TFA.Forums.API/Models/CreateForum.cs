@@ -2,5 +2,5 @@
 
 public class CreateForum
 {
-    public string Title { get; set; }
+    public required string Title { get; set; }
 }
