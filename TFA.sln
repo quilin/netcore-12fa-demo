@@ -5,37 +5,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-items", "solution-
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Domain", "TFA.Forums.Domain\TFA.Forums.Domain.csproj", "{7E2AA428-F3A6-4A45-BCB8-397BFA382B03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Domain", "src\TFA.Forums.Domain\TFA.Forums.Domain.csproj", "{7E2AA428-F3A6-4A45-BCB8-397BFA382B03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Storage", "TFA.Forums.Storage\TFA.Forums.Storage.csproj", "{1F286456-4AF8-492F-91B5-C1833D34949E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Storage", "src\TFA.Forums.Storage\TFA.Forums.Storage.csproj", "{1F286456-4AF8-492F-91B5-C1833D34949E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.API", "TFA.Forums.API\TFA.Forums.API.csproj", "{94BB7C2E-DFB3-4D4C-BD50-CE7672E873D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.API", "src\TFA.Forums.API\TFA.Forums.API.csproj", "{94BB7C2E-DFB3-4D4C-BD50-CE7672E873D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Domain.Tests", "TFA.Forums.Domain.Tests\TFA.Forums.Domain.Tests.csproj", "{FBD72A7F-3EE6-475F-A4BA-0EC7EE21621D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Domain.Tests", "test\TFA.Forums.Domain.Tests\TFA.Forums.Domain.Tests.csproj", "{FBD72A7F-3EE6-475F-A4BA-0EC7EE21621D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Domain.DependencyInjection", "TFA.Forums.Domain.DependencyInjection\TFA.Forums.Domain.DependencyInjection.csproj", "{FB309A46-67D9-4A4B-9020-855A75B9698C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Domain.DependencyInjection", "src\TFA.Forums.Domain.DependencyInjection\TFA.Forums.Domain.DependencyInjection.csproj", "{FB309A46-67D9-4A4B-9020-855A75B9698C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Storage.DependencyInjection", "TFA.Forums.Storage.DependencyInjection\TFA.Forums.Storage.DependencyInjection.csproj", "{22B0E6F3-C5FE-45D1-B5AB-3703F869A771}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Storage.DependencyInjection", "src\TFA.Forums.Storage.DependencyInjection\TFA.Forums.Storage.DependencyInjection.csproj", "{22B0E6F3-C5FE-45D1-B5AB-3703F869A771}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.E2E", "TFA.Forums.E2E\TFA.Forums.E2E.csproj", "{0745B0CA-116D-4E39-8DBD-462344FB3615}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.E2E", "test\TFA.Forums.E2E\TFA.Forums.E2E.csproj", "{0745B0CA-116D-4E39-8DBD-462344FB3615}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Storage.Tests", "TFA.Forums.Storage.Tests\TFA.Forums.Storage.Tests.csproj", "{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Forums.Storage.Tests", "test\TFA.Forums.Storage.Tests\TFA.Forums.Storage.Tests.csproj", "{27F11FC6-88DA-4253-9651-B6D0A0D2DCB4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TFA.Forum", "TFA.Forum", "{4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TFA.Forum", "src\TFA.Forum", "{4E528EDE-7005-4B73-A9B0-80B2DDD87C4C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TFA.Search", "TFA.Search", "{C5298F98-57ED-422B-A2A8-99FD75C93D09}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TFA.Search", "src\TFA.Search", "{C5298F98-57ED-422B-A2A8-99FD75C93D09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.API", "TFA.Search.API\TFA.Search.API.csproj", "{38603556-7918-4C30-8A0F-2B3309E42EAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.API", "src\TFA.Search.API\TFA.Search.API.csproj", "{38603556-7918-4C30-8A0F-2B3309E42EAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Domain", "TFA.Search.Domain\TFA.Search.Domain.csproj", "{FCFCA675-3C7A-4CCA-91D4-A104747CB870}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Domain", "src\TFA.Search.Domain\TFA.Search.Domain.csproj", "{FCFCA675-3C7A-4CCA-91D4-A104747CB870}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Storage", "TFA.Search.Storage\TFA.Search.Storage.csproj", "{A3E02644-DA26-4455-86BF-851D3D6A4949}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Storage", "src\TFA.Search.Storage\TFA.Search.Storage.csproj", "{A3E02644-DA26-4455-86BF-851D3D6A4949}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Domain.DependencyInjection", "TFA.Search.Domain.DependencyInjection\TFA.Search.Domain.DependencyInjection.csproj", "{87CA9C44-65D5-4F08-A83A-89BD7EDA5F2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Domain.DependencyInjection", "src\TFA.Search.Domain.DependencyInjection\TFA.Search.Domain.DependencyInjection.csproj", "{87CA9C44-65D5-4F08-A83A-89BD7EDA5F2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Storage.DependencyInjection", "TFA.Search.Storage.DependencyInjection\TFA.Search.Storage.DependencyInjection.csproj", "{32516455-D108-4FAF-A396-7CCF02AB2328}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.Storage.DependencyInjection", "src\TFA.Search.Storage.DependencyInjection\TFA.Search.Storage.DependencyInjection.csproj", "{32516455-D108-4FAF-A396-7CCF02AB2328}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.ForumConsumer", "TFA.Search.ForumConsumer\TFA.Search.ForumConsumer.csproj", "{9BD3120B-0140-4BD7-8BCF-52D7B4A5660E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFA.Search.ForumConsumer", "src\TFA.Search.ForumConsumer\TFA.Search.ForumConsumer.csproj", "{9BD3120B-0140-4BD7-8BCF-52D7B4A5660E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{BF9DA26C-BFCB-4083-98E6-E9070D668B7F}"
 	ProjectSection(SolutionItems) = preProject
